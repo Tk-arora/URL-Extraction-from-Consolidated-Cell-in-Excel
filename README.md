@@ -34,14 +34,9 @@ This guide explains how to extract multiple URLs from a single cell (`B3`) in Ex
 7. **Step 6: Repeat the Process**
    - Dragging the formula down in column C will repeat the extraction process for subsequent URLs.
 
-## Visual Representation
-The flowchart below illustrates the process of extracting URLs from the consolidated cell step-by-step:
-
-![Flowchart](A_flowchart_diagram_illustrating_the_breakdown_of_.png)
 
 --- 
 
-You can copy this content directly into your README file.
 
 ## Visual Representation
 
