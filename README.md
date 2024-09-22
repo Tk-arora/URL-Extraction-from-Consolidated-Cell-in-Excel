@@ -1,91 +1,46 @@
-Here's a more structured README file with explanations, breakdowns, and a simplified visual representation of how the formulas work. The explanations clarify the logic behind extracting URLs from a consolidated cell in Excel using the given formulas.
 
----
 
-# README: URL Extraction from Consolidated Cell in Excel
+# README: Extracting URLs from a Consolidated Cell in Excel
 
 ## Overview
-This guide explains how to extract individual URLs from a consolidated cell (`B3`) using Excel functions. By using a specific formula in column `C`, you can separate each URL into individual cells, simply by dragging down the formula.
+This guide explains how to extract multiple URLs from a single cell (`B3`) in Excel using a combination of `FIND`, `MID`, and `LEN` functions. The process is visualized in the attached flowchart.
 
-## Formula Explanation
-
-### Main Formula in Cell `C3`
+### Formula Used
 ```excel
 =MID($B$3, FIND(C3, $B$3, FIND("http", $B$3, 1)) + LEN($C$3), LEN($C$3))
 ```
 
-### What This Formula Does
-This formula extracts individual URLs from a cell containing multiple URLs (in `B3`). Here’s what each part does:
+## Step-by-Step Breakdown
 
-- **`MID($B$3, start_point, length)`**: 
-  - Extracts text from cell `B3` starting from `start_point` for `length` characters.
-  
-- **`FIND(C3, $B$3, FIND("http", $B$3, 1)) + LEN($C$3)`**:
-  - Finds the position of the text in cell `C3` within `B3` starting after the first "http". It then adds the length of the URL in `C3` to move to the start of the next URL.
+1. **Input Cell B3**: Contains multiple URLs.
+2. **Step 1: FIND Function**
+   - `FIND("http", $B$3, 1)` finds the first occurrence of the text "http" in cell B3.
+   - This returns the position of the first URL's starting point.
 
-### Simplified Version
-If we break it down to the basic form:
-```excel
-=MID($B$3, 73, 73)
-```
-- **Start Point**: 73 (Position of the next "http").
-- **Length**: 73 (Length of the URL to extract).
+3. **Step 2: FIND Second Occurrence**
+   - `FIND("http", $B$3, 2)` finds the starting position of the second URL in cell B3.
+   - The function starts searching from the position after the first occurrence.
 
-## Step-by-Step Guide
+4. **Step 3: MID Function**
+   - `MID($B$3, start_position, length)` extracts the URL based on the calculated starting position and the length obtained from the first URL.
 
-1. **Finding the Start Point**:
-    - To find the starting point of the URLs, we use the `FIND` function:
-    ```excel
-    =FIND("http", B3, 1)
-    ```
-    - This finds the first occurrence of "http" in cell `B3`.
+5. **Step 4: LEN Function**
+   - `LEN($C$3)` calculates the length of the first extracted URL to determine where the next URL starts.
 
-2. **Finding the Second URL**:
-    - To find the starting point of the next URL, we use:
-    ```excel
-    =FIND("http", B3, 2)
-    ```
-    - Result (`74`) indicates that the second "http" starts at the 74th character.
+6. **Step 5: Next URL Extraction**
+   - `FIND(C3, $B$3, FIND("http", $B$3, 1)) + LEN($C$3)` calculates the start position for the next URL extraction, considering the length of the previous URL.
 
-3. **Extracting the First URL**:
-    - Using the `LEFT` function to extract the first URL:
-    ```excel
-    =LEFT(B3, FIND("http", B3, 2) - 1)
-    ```
-    - This will extract all characters from the start of `B3` to just before the second "http".
+7. **Step 6: Repeat the Process**
+   - Dragging the formula down in column C will repeat the extraction process for subsequent URLs.
 
-4. **Extracting Subsequent URLs**:
-    - Using a combination of `MID`, `FIND`, and `LEN` to extract the remaining URLs:
-    ```excel
-    =MID($B$3, FIND(C3, $B$3, FIND("http", $B$3, 1)) + LEN($C$3), LEN($C$3))
-    ```
-    - As you drag this formula down, it will update the start point based on the previous URL's length, allowing you to extract each subsequent URL.
+## Visual Representation
+The flowchart below illustrates the process of extracting URLs from the consolidated cell step-by-step:
 
-## Formula Breakdown
+![Flowchart](A_flowchart_diagram_illustrating_the_breakdown_of_.png)
 
-### MID Function
-- **Syntax**: `MID(text, start_num, num_chars)`
-- **Example**: 
-  ```excel
-  =MID($B$3, 73, 73)
-  ```
-  - Extracts 73 characters starting from position 73 in cell `B3`.
+--- 
 
-### FIND Function
-- **Syntax**: `FIND(find_text, within_text, [start_num])`
-- **Example**:
-  ```excel
-  =FIND("http", B3, 2)
-  ```
-  - Finds the position of the second occurrence of "http" in cell `B3`.
-
-### LEFT Function
-- **Syntax**: `LEFT(text, num_chars)`
-- **Example**:
-  ```excel
-  =LEFT(B3, FIND("http", B3, 2) - 1)
-  ```
-  - Extracts text from the left of cell `B3` up to the character before the second "http".
+You can copy this content directly into your README file.
 
 ## Visual Representation
 
@@ -130,6 +85,3 @@ If we break it down to the basic form:
 
 This method effectively separates multiple URLs stored in a single cell into individual cells, enabling you to manage and analyze them efficiently.
 
----
-
-If you need a flowchart diagram based on this logic, I can create one for you. Let me know!
